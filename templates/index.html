@@ -2,17 +2,20 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
+	<link rel="icon" href="{{ url_for('static', filename='images/adbddb.ico')}}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}" type="text/css">
 	<title>{{ name }}'s Watchlist</title>
 </head>
 <body>
-	<h2>{{ name }}'s Watchlist</h2>
+	<h2><img alt="Avatar" class="avatar" src="{{ url_for('static', filename='images/totoro.gif')}}">{{ name }}'s Watchlist</h2>
 	<p>{{ movies|length }} Titles</p>
-	<ul>
+	<ul class="movie-list">
 		{% for movie in movies %}
 		<li>{{ movie.title }} - {{ movie.year }}</li>
 		{% endfor %}
 	</ul>
 	<footer>
+		<img class="totoro" src="{{ url_for('static', filename='images/totoro.gif') }}">
 		<small>&copy; 2019 <a href="">XIAOPIPI</a></small>
 	</footer>
 </body>
