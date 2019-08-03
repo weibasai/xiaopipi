@@ -24,17 +24,18 @@ class Movie(db.Model):
 	title = db.Column(db.String(60))
 	year = db.Column(db.String(4))
 
+@app.context_processor
+def inject_user():
+	user = User.query.first()
+	return dict(user=user)
 
 @app.route('/')
 def index():
 	user = User.query.first()
 	movies = Movie.query.all()
-	return render_template('index.html', user=user, movies=movies)
+	return render_template('index.html', movies=movies)
 	#return '<h1>welcome to the home of xiaopipi!</h1><img src="static/images/totoro.gif">'
 
-@app.route('/user/<name>')
-def hello(name):
-	return '<h2>hi, %s' % name
 
 @app.cli.command()
 def forge():
@@ -63,6 +64,19 @@ def forge():
 	db.session.commit()
 	click.echo('Done!')
 
+@app.errorhandler(404)
+def page_not_found(e):
+	user = User.query.first()
+	return render_template('404.html'), 404
+
+
+
+if __name__ == '__main__':
+    app.run(
+      host='192.168.1.6',
+      port= 5000,
+      debug=True
+    )
 
 
 
